@@ -2,11 +2,13 @@ import React, { createContext } from "react";
 import { observable, IObservableObject } from "mobx";
 
 import ToolBar from "../atom/ToolBar";
+import Tab from "../atom/Tab";
 import Icon from "../atom/Icon";
 
 export enum PredefinedComponents {
-  Icon = "@atom/Icon",
-  ToolBar = "@atom/ToolBar"
+  Tab = "@atom/Tab",
+  ToolBar = "@atom/ToolBar",
+  Icon = "@atom/Icon"
 }
 
 export type ComponentMap = {
@@ -21,6 +23,7 @@ export interface ComponentsHierarchy {
 const components: ComponentsHierarchy = {
   atom: {
     [PredefinedComponents.ToolBar]: ToolBar,
+    [PredefinedComponents.Tab]: Tab,
     [PredefinedComponents.Icon]: Icon
   },
   dynamic: observable({})

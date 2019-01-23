@@ -11,7 +11,10 @@ const Pane: React.SFC<{ visible: boolean }> = ({ children, visible }) => (
       top: "0",
       width: "100%",
       height: "100%",
-      opacity: visible ? 1 : 0
+      opacity: visible ? 1 : 0,
+      zIndex: visible ? 1 : -1,
+      padding: "10px",
+      boxSizing: "border-box"
     }}
   >
     {children}

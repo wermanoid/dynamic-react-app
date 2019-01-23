@@ -6,14 +6,18 @@ import ToolBar from "./atom/ToolBar";
 import Icon from "./atom/Icon";
 import Tab from "./atom/Tab";
 import Pane from "./atom/Pane";
+// import InputBox from "./molecule/InputBox";
+import Configs from "./modules/Configs";
 
-import {
-  ComponentStore,
-  ComponentEntires,
-  PredefinedComponents
-} from "./provider/ComponentStore";
+import { ComponentStore, ComponentEntires } from "./provider/ComponentStore";
+import { observer } from "mobx-react";
+import { observable, autorun, reaction } from "mobx";
+import Builder from "./modules/Builder";
 
+@observer
 class App extends Component<{}, { active: number }> {
+  @observable config: any = null;
+
   constructor(props: {}) {
     super(props);
     this.state = { active: 0 };
@@ -35,19 +39,17 @@ class App extends Component<{}, { active: number }> {
         <ComponentStore>
           <div className="App__Content">
             <Pane visible={active === 0}>
-              <ComponentEntires>
-                {components => {
-                  console.log(components);
-                  const Ico = components.atom[PredefinedComponents.Icon];
-                  return (
-                    <div>
-                      test with <Ico src={logo} />
-                    </div>
-                  );
+              <Configs
+                onSubmit={conf => {
+                  this.config = conf;
                 }}
+              />
+            </Pane>
+            <Pane visible={active === 1}>
+              <ComponentEntires>
+                {cmp => <Builder config={this.config} components={cmp} />}
               </ComponentEntires>
             </Pane>
-            <Pane visible={active === 1}>Content 2</Pane>
           </div>
         </ComponentStore>
       </div>

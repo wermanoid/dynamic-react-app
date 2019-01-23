@@ -1,0 +1,46 @@
+{
+  "atom": {
+    "Icon": {
+      "props": "src"
+    },
+    "ToolBar": {
+      "props": "children",
+      "content": "children"
+    },
+    "Tab": {
+      "props": "children",
+      "content": "children"
+    }
+  },
+  "generate": {
+    "Tabs": {
+      "props": {
+        "tabs": [["id", "title", "icon"]]
+      },
+      "wrapper": {
+        "component": "ToolBar"
+      },
+      "content": {
+        "map": [
+          "tabs",
+          {
+            "component": "Tab",
+            "props": {
+              "onClick": "id",
+              "key": "id"
+            },
+            "content": [
+              {
+                "component": "Icon",
+                "props": {
+                  "src": "icon"
+                }
+              },
+              "title"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
