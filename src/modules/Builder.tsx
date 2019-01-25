@@ -9,6 +9,9 @@ const getAtoms = (o: any) => Object.keys(o.atom);
 const getGenerated = (o: any) => Object.keys(o.generate)[0];
 const toAtom = (name: string) => `@atom/${name}`;
 
+export const buildWrapper = () => {};
+export const buildComponent = () => {};
+
 export interface BuilderProps {
   components: {
     atom: { [key: string]: React.ComponentType<any> };
@@ -53,47 +56,48 @@ class Builder extends React.Component<BuilderProps> {
 
   private rebuild = () => {
     const { config, components } = this.props;
-    const cmp = toJS(config.components);
-    const gen = getGenerated(cmp);
-    const toBuild = cmp.generate[gen];
+    console.log({ config, components });
+    // const cmp = toJS(config.components);
+    // const gen = getGenerated(cmp);
+    // const toBuild = cmp.generate[gen];
 
-    let contentBuild = toBuild.content;
-    if (toBuild.content.map) {
-      const cnt = toBuild.content.map[1].content;
-      const renderContent = (item: any) =>
-        cnt.map((cont: any) => {
-          if (typeof cont === "string") return cont;
-          const prop = Object.keys(cont.props)[0];
-          return React.createElement(
-            components.atom[toAtom(cont.component)],
-            { [prop]: get(item, [cont.props[prop]]) },
-            null
-          );
-        });
+    // let contentBuild = toBuild.content;
+    // if (toBuild.content.map) {
+    //   const cnt = toBuild.content.map[1].content;
+    //   const renderContent = (item: any) =>
+    //     cnt.map((cont: any) => {
+    //       if (typeof cont === "string") return cont;
+    //       const prop = Object.keys(cont.props)[0];
+    //       return React.createElement(
+    //         components.atom[toAtom(cont.component)],
+    //         { [prop]: get(item, [cont.props[prop]]) },
+    //         null
+    //       );
+    //     });
 
-      contentBuild = (data: any) =>
-        get<any, string>(data, [toBuild.content.map[0]]).map((item: any) => {
-          return React.createElement(
-            components.atom[toAtom(toBuild.content.map[1].component)],
-            mapValues(toBuild.content.map[1].props, (from, to) => {
-              return to === "onClick"
-                ? () => console.warn({ [from]: get(item, [from]) })
-                : get(item, [from]);
-            }),
-            ...renderContent(item)
-          );
-        });
-    }
+    //   contentBuild = (data: any) =>
+    //     get<any, string>(data, [toBuild.content.map[0]]).map((item: any) => {
+    //       return React.createElement(
+    //         components.atom[toAtom(toBuild.content.map[1].component)],
+    //         mapValues(toBuild.content.map[1].props, (from, to) => {
+    //           return to === "onClick"
+    //             ? () => console.warn({ [from]: get(item, [from]) })
+    //             : get(item, [from]);
+    //         }),
+    //         ...renderContent(item)
+    //       );
+    //     });
+    // }
 
-    const result: any = (data: any) =>
-      React.createElement(
-        components.atom[toAtom(toBuild.wrapper.component)],
-        toBuild.wrapper.props ? {} : undefined,
-        ...contentBuild(data)
-      );
+    // const result: any = (data: any) =>
+    //   React.createElement(
+    //     components.atom[toAtom(toBuild.wrapper.component)],
+    //     toBuild.wrapper.props ? {} : undefined,
+    //     ...contentBuild(data)
+    //   );
 
-    result.displayName = gen;
-    this.components.set(gen, result);
+    // result.displayName = gen;
+    // this.components.set(gen, result);
   };
 }
 

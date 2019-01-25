@@ -41,6 +41,7 @@ class App extends Component<{}, { active: number }> {
             <Pane visible={active === 0}>
               <Configs
                 onSubmit={conf => {
+                  console.log(conf)
                   this.config = conf;
                 }}
               />

@@ -18,7 +18,7 @@ const InputBox: React.SFC<InputBoxProps> = ({
 }) => (
   <Fieldset title={title}>
     <Input
-      multiline={Number(rows) >= 2 || false}
+      multiline={Number(rows) >= 2 ? rows : false}
       onChange={onChange}
       initial={initial}
     />
