@@ -11,13 +11,14 @@ import {
 } from "mobx";
 
 import { parse } from "../parser/syntax";
+import { compose } from "../parser/composer";
 
 export interface ConfigsParserProps {
   onSubmit?: (configs: { components: any; configurations: any }) => void;
 }
 
 export interface Configs {
-  components: string;
+  components: any;
   configurations: string;
 }
 
@@ -26,24 +27,24 @@ const autoSubmitGate = (callback: ConfigsParserProps["onSubmit"]) => (
 ) => {
   try {
     callback!({
-      components: JSON.parse(config.components),
+      components: config.components,
       configurations: JSON.parse(config.configurations || "null")
     });
   } catch {}
 };
 
-const temp = `
-@unit Icon($src)
-@unit Tab($id)
-@unit ToolBar
+const temp = `atom Icon($src, $alt)
+atom Tab($id)
+atom ToolBar
 
-component Tabs($tabs) is ToolBar {
-  @map $tabs to Tab({ url }) {
-    Icon({ src })
-    { title }
+component Tabs($tabs) is ToolBar($className) {
+  Icon($src)
+  { $header }
+  @map $tabs to Tab($url) {
+    Icon($src)
+    { $title }
   }
-}
-`;
+}`;
 
 class ConfigsParser extends React.Component<ConfigsParserProps> {
   @observable config = {
@@ -56,8 +57,12 @@ class ConfigsParser extends React.Component<ConfigsParserProps> {
     const submit = autoSubmitGate(this.props.onSubmit);
 
     autorun(() => {
-      // submit(this.config);
-      console.log(parse(this.config.components));
+      const sytax = parse(this.config.components);
+      try {
+        const result = compose(sytax);
+        console.log({ result });
+        submit({ components: result, configurations: "" });
+      } catch {}
     });
   }
 

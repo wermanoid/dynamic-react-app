@@ -11,7 +11,7 @@ import Configs from "./modules/Configs";
 
 import { ComponentStore, ComponentEntires } from "./provider/ComponentStore";
 import { observer } from "mobx-react";
-import { observable, autorun, reaction } from "mobx";
+import { observable, toJS, reaction } from "mobx";
 import Builder from "./modules/Builder";
 
 @observer
@@ -41,14 +41,14 @@ class App extends Component<{}, { active: number }> {
             <Pane visible={active === 0}>
               <Configs
                 onSubmit={conf => {
-                  console.log(conf)
+                  console.log(conf);
                   this.config = conf;
                 }}
               />
             </Pane>
             <Pane visible={active === 1}>
               <ComponentEntires>
-                {cmp => <Builder config={this.config} components={cmp} />}
+                {cmp => <Builder config={toJS(this.config)} components={cmp} />}
               </ComponentEntires>
             </Pane>
           </div>

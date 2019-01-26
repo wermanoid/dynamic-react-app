@@ -13,20 +13,32 @@ export interface SyntaxWord extends SyntaxChar {
 
 export type SyntaxNode = SyntaxChar | SyntaxWord;
 
+export const isWord = (node: null | SyntaxNode): node is SyntaxWord =>
+  Boolean(node && node.type === "text");
+
 const mapper: { [k: string]: Function } = {
-  ["("]: (line: number, index: number) => ({ line, index, type: "brace-open" }),
+  [","]: (line: number, index: number) => ({
+    line,
+    index,
+    type: "comma"
+  }),
+  ["("]: (line: number, index: number) => ({
+    line,
+    index,
+    type: "parens-open"
+  }),
   [")"]: (line: number, index: number) => ({
     line,
     index,
-    type: "brace-close"
+    type: "parens-end"
   }),
   ["\n"]: (line: number, index: number) => ({ line, index, type: "new-line" }),
   [" "]: (line: number, index: number) => ({ line, index, type: "space" }),
-  ["{"]: (line: number, index: number) => ({ line, index, type: "block-open" }),
+  ["{"]: (line: number, index: number) => ({ line, index, type: "brace-open" }),
   ["}"]: (line: number, index: number) => ({
     line,
     index,
-    type: "block-close"
+    type: "brace-end"
   }),
   default: (line: number, start: number, char: string) => ({
     line,
@@ -39,11 +51,9 @@ const mapper: { [k: string]: Function } = {
 
 const filterValuable = pipe([
   filter(negate(matches({ type: "space" }))),
-  filter(negate(matches({ type: "new-line" })))
+  filter(negate(matches({ type: "new-line" }))),
+  filter(negate(matches({ type: "comma" })))
 ]);
-
-const isWord = (node: null | SyntaxNode): node is SyntaxWord =>
-  Boolean(node && node.type === "text");
 
 export const parse = (inp: string) => {
   let count = 0;
