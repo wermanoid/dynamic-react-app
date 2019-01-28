@@ -1,9 +1,20 @@
 import { filter, negate, matches, pipe } from "lodash/fp";
 
+export enum Symbols {
+  BlockStart = "brace-open",
+  BlockEnd = "brace-end",
+  ParensStart = "parens-open",
+  ParensEnd = "parens-end",
+  NewLine = "new-line",
+  Space = "space",
+  Comma = "comma",
+  Text = "text"
+}
+
 export interface SyntaxChar {
   line: number;
   index: number;
-  type: string;
+  type: Symbols;
 }
 
 export interface SyntaxWord extends SyntaxChar {
@@ -55,7 +66,7 @@ const filterValuable = pipe([
   filter(negate(matches({ type: "comma" })))
 ]);
 
-export const parse = (inp: string) => {
+export const parse = (inp: string, withFilter: boolean = true) => {
   let count = 0;
   let index = 0;
   let row = 0;
@@ -86,5 +97,5 @@ export const parse = (inp: string) => {
     }
   }
 
-  return filterValuable(expressions);
+  return withFilter ? filterValuable(expressions) : expressions;
 };
