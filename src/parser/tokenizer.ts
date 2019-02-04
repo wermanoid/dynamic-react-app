@@ -9,17 +9,19 @@ const isParenClose = matches({ type: Chars.ParenClose });
 
 const cleanup = pipe([dropWhiteSpaces, dropLineEndings]);
 
-export enum QueryExpressions {
+export enum Tokens {
   Query = "Query",
   CallExpression = "CallExpression",
   UseDeclaration = "UseDeclaration",
   ContentDeclaration = "ContentDeclaration",
   ComponentDeclaration = "ComponentDeclaration",
-  ArgumentsDeclaration = "ArgumentsDeclaration"
+  ArgumentsDeclaration = "ArgumentsDeclaration",
+  TokensBlock = "TokensBlock",
+  TextBlock = "TextBlock"
 }
 
 export interface Statement {
-  type: QueryExpressions;
+  type: Tokens;
 }
 
 export interface QueryStatement extends Statement {
@@ -76,20 +78,20 @@ const withArgs = (channel: any) =>
 const bodyExpressions: any = {
   use: (tokens: CharToken[]) =>
     chain(tokens, 0, {
-      type: QueryExpressions.UseDeclaration
+      type: Tokens.UseDeclaration
     })
       .pipe(({ value }: any) => (value === "@lazy" ? { lazy: true } : null))
       .pipe(({ value }: any) => ({ source: value }))
       .pipe(({ value }: any) => ({ name: value })).result,
   component: (tokens: CharToken[]) =>
-    chain(tokens, 0, { type: QueryExpressions.ComponentDeclaration })
+    chain(tokens, 0, { type: Tokens.ComponentDeclaration })
       .pipe(({ value }: any) => ({ name: value }))
       .join(withArgs).result
 };
 
 export const tokenizer = (syntax: CharToken[]): QueryStatement => {
   const tokens = cleanup(syntax);
-  const root: QueryStatement = { type: QueryExpressions.Query, body: [] };
+  const root: QueryStatement = { type: Tokens.Query, body: [] };
 
   let index = 0;
 
