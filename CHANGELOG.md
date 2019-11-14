@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-beta.1](https://github.com/wermanoid/dynamic-react-app/compare/v0.0.1-beta.0...v0.0.1-beta.1) (2019-11-14)
+
+
+### Bug Fixes
+
+* **repo:** test examples ([ab9ab2e](https://github.com/wermanoid/dynamic-react-app/commit/ab9ab2e8f642f302a4a273e01acec05221462983)), closes [OMG-234](https://this.is.my/custom/tracker/issue/234)
+
 ### 0.0.1-beta.0 (2019-11-14)
 
 

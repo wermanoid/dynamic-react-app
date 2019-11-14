@@ -1,6 +1,6 @@
 {
   "name": "reactify",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "private": true,
   "dependencies": {
     "@emotion/core": "^10.0.6",
@@ -37,5 +37,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "config": {
+    "host": "https://trololo.com"
+  }
 }
