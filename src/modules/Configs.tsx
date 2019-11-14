@@ -10,8 +10,8 @@ import {
   action
 } from "mobx";
 
-import { parse } from "../parser/syntax";
-import { compose } from "../parser/composer";
+import { parse } from "../parser_old/syntax";
+import { compose } from "../parser_old/composer";
 
 export interface ConfigsParserProps {
   onSubmit?: (configs: { components: any; configurations: any }) => void;

@@ -14,7 +14,7 @@ export const getArgsState = (
     },
     opened: false,
     result: [] as string[],
-    use(context: Composite<unknown>, node: SyntaxNode) {
+    use(this: any, context: Composite<unknown>, node: SyntaxNode) {
       if (!this.opened && node.type === Symbols.ParensStart) {
         this.opened = true;
         return true;
