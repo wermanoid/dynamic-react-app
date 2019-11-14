@@ -18,9 +18,9 @@
     "preMajor": false,
     "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
     "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
-    "issueUrlFormat": "{{host}}/https://this.is.my/custom/tracker/issue/{{id}}",
     "userUrlFormat": "{{host}}/{{user}}",
     "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
+    "issueUrlFormat": "{{host}}/https://this.is.my/custom/tracker/issue/{{id}}",
     "issuePrefixes": ["OMG-"] 
   }
 }
