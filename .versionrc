@@ -1,0 +1,26 @@
+{
+  "scripts": {
+      "precommit": "git add CHANGELOG.md"
+  },
+  "preset": {
+    "name": "conventionalcommits",
+    "header": "# Changelog\n\n",
+    "types": [
+        {"type": "feat", "section": "Features"},
+        {"type": "fix", "section": "Bug Fixes"},
+        {"type": "chore", "hidden": true},
+        {"type": "docs", "hidden": true},
+        {"type": "style", "hidden": true},
+        {"type": "refactor", "hidden": true},
+        {"type": "perf", "hidden": true},
+        {"type": "test", "hidden": true}
+    ],
+    "preMajor": false,
+    "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+    "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+    "issueUrlFormat": "https://this.is.my/custom/tracker/issue/{{id}}",
+    "userUrlFormat": "{{host}}/{{user}}",
+    "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
+    "issuePrefixes": ["OMG-"] 
+  }
+}
